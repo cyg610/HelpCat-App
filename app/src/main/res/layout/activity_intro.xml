@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFF"
+    tools:context=".IntroActivity">
+
+    <TextView
+        android:text="캣이득"
+        android:textStyle="bold"
+        android:textColor="#E5D85C"
+        android:textSize="20dp"
+        android:gravity="center_horizontal"
+        android:layout_above="@id/introIMG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/introIMG"
+        android:layout_centerInParent="true"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+         />
+
+    <TextView
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        android:text="집사 잃은 고양이들을 분양합니다"
+        android:textColor="#E5D85C"
+        android:layout_below="@+id/introIMG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>

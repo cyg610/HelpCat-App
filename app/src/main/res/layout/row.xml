@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+       android:background="#FFF" android:elevation="10dp" android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/frame"
+        android:layout_weight="2.5"
+        android:layout_width="match_parent"
+        android:layout_height="130dp">
+    <ImageView
+        android:id="@+id/catIMG"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="10dp"
+        android:scaleType="fitXY" />
+
+        <TextView
+            android:id="@+id/EndingForm"
+            android:text="입양 완료"
+            android:textColor="#FFF"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:visibility="invisible"
+            android:background="@drawable/round"
+            android:backgroundTint="#A8BDBDBD"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"/>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:layout_weight="2"
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            android:id="@+id/catNAME"
+            android:text="고양이 이름"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/age"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:id="@+id/catAGE"
+                android:text="나이"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ImageView
+                android:layout_gravity="center"
+                android:src="@drawable/sex"
+                android:layout_width="30dp"
+                android:layout_height="30dp"/>
+
+            <TextView
+                android:id="@+id/catSEX"
+                android:text="성별"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:padding="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:background="@drawable/round"
+            android:backgroundTint="#D3C64A"
+            android:textColor="#FFF"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_gravity="center_vertical"
+            android:id="@+id/catKIND"
+            android:text="종"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+
+    <ImageView
+        android:id="@+id/imageCall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_weight="3"
+        android:padding="10dp"
+        android:src="@drawable/callversion2" />
+
+</LinearLayout>
