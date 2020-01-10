@@ -75,6 +75,14 @@ public class ListVIewAdapter extends BaseAdapter {
         catAge.setText(listVIewItem.getAge());
         catSex.setText(listVIewItem.getSex());
 
+        catKind.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, KindActivity.class);
+                context.startActivity(intent);
+            }
+        });
+
 
         if(listVIewItem.getStatus()=="완료"){
             EndingForm.setVisibility(View.VISIBLE);
@@ -105,6 +113,7 @@ public class ListVIewAdapter extends BaseAdapter {
                 }
             });
 
+
             imageCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -132,6 +141,9 @@ public class ListVIewAdapter extends BaseAdapter {
                 }
             });
         }
+
+
+
         return convertView;
     }
 
