@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.media.Image;
@@ -23,9 +25,14 @@ import androidx.annotation.RequiresApi;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ListVIewAdapter extends BaseAdapter {
+    Bitmap bitmap;
     private ArrayList<ListVIewItem> listViewItemList = new ArrayList<ListVIewItem>();
     public  ListVIewAdapter(ArrayList<ListVIewItem> arrays){
 
@@ -69,7 +76,6 @@ public class ListVIewAdapter extends BaseAdapter {
 
         final ListVIewItem listVIewItem= listViewItemList.get(position);
 
-        catImage.setImageDrawable(listVIewItem.geticon());
         catName.setText(listVIewItem.getName());
         catKind.setText("#"+listVIewItem.getKind());
         catAge.setText(listVIewItem.getAge());
@@ -114,6 +120,35 @@ public class ListVIewAdapter extends BaseAdapter {
             });
 
 
+
+            Thread mThread = new Thread() {
+                public void run() {
+
+                    try {
+                        URL url = new URL(listViewItemList.get(pos).geticon());
+                        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                        conn.setDoInput(true);
+                        conn.connect();
+
+                        InputStream is = conn.getInputStream();
+                        bitmap = (Bitmap) BitmapFactory.decodeStream(is);
+
+
+                    } catch (IOException ex) {
+
+                    }
+                }
+            };
+
+            mThread.start();
+            try {
+                mThread.join();
+                catImage.setImageBitmap(bitmap);
+            } catch (InterruptedException e) {
+
+            }
+
+
             imageCall.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -147,7 +182,7 @@ public class ListVIewAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public  void additem(Drawable ic, String name, String kind, String age, String sex, String helper, String phone, String status, String weight, String neut, String chara){
+    public  void additem(String ic, String name, String kind, String age, String sex, String helper, String phone, String status, String weight, String neut, String chara){
         ListVIewItem item = new ListVIewItem();
         item.seticon(ic);
         item.setName(name);
