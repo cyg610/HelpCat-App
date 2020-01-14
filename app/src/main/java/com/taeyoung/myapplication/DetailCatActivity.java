@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +15,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class DetailCatActivity extends AppCompatActivity {
 
     Button callBtn;
     ImageView detailIMG;
     TextView helper, helperPhone, detailName, detailAge, detailSex, detailWeight, detailNeutered, detailChara, detailKind;
 
+    Bitmap bitmap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,21 +46,8 @@ public class DetailCatActivity extends AppCompatActivity {
 
 
        Intent it = getIntent();
-       int imageNumber = it.getIntExtra("Image", 0);
-       if(imageNumber == 0){
-            detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c201901754));
-       }else if(imageNumber == 1){
-           detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c201912041612465));
-       }else if(imageNumber ==2){
-           detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c20191204161268));
-        }else if(imageNumber ==3){
-           detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c20191204111216));
-       }else if(imageNumber == 4){
-           detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c201912041012571));
-       }else if(imageNumber == 5){
 
-           detailIMG.setImageDrawable(getResources().getDrawable(R.drawable.c201912040912407));
-       }
+        final String image = it.getStringExtra("Image");
 
        final String phone = it.getStringExtra("Phone");
         helperPhone.setText(phone);
@@ -62,10 +57,49 @@ public class DetailCatActivity extends AppCompatActivity {
         detailName.setText(it.getStringExtra("Name"));
         detailAge.setText(it.getStringExtra("Age"));
         detailSex.setText(it.getStringExtra("Sex"));
-        detailWeight.setText(it.getStringExtra("weight")+"(Kg)");
-        detailNeutered.setText(it.getStringExtra("neut"));
+        detailWeight.setText(it.getStringExtra("weight"));
         detailChara.setText(it.getStringExtra("chara"));
-        detailKind.setText(it.getStringExtra("kind"));
+
+
+        String neut_str = it.getStringExtra("neut");
+        if(neut_str.equals("Y")){
+             detailNeutered.setText("중성화 O");
+        }else if(neut_str.equals("N")){
+            detailNeutered.setText("중성화 N");
+        }else {
+            detailNeutered.setText("중성화 정보없음");
+        }
+
+        String kind_str = it.getStringExtra("kind");
+        String catkind_sub = kind_str.substring(6);
+        detailKind.setText(catkind_sub);
+
+        Thread mThread = new Thread() {
+            public void run() {
+
+                try {
+                    URL url = new URL(image);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setDoInput(true);
+                    conn.connect();
+
+                    InputStream is = conn.getInputStream();
+                    bitmap = (Bitmap) BitmapFactory.decodeStream(is);
+
+
+                } catch (IOException ex) {
+
+                }
+            }
+        };
+
+        mThread.start();
+        try {
+            mThread.join();
+            detailIMG.setImageBitmap(bitmap);
+        } catch (InterruptedException e) {
+
+        }
 
        callBtn.setOnClickListener(new View.OnClickListener() {
            @Override

@@ -11,6 +11,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +68,6 @@ public class ListVIewAdapter extends BaseAdapter {
         TextView catKind = convertView.findViewById(R.id.catKIND);
         TextView catAge = convertView.findViewById(R.id.catAGE);
         TextView catSex = convertView.findViewById(R.id.catSEX);
-        ImageView imageCall = convertView.findViewById(R.id.imageCall);
         TextView EndingForm = convertView.findViewById(R.id.EndingForm);
 
         GradientDrawable drawable = (GradientDrawable) context.getDrawable(R.drawable.round);
@@ -77,9 +77,11 @@ public class ListVIewAdapter extends BaseAdapter {
         final ListVIewItem listVIewItem= listViewItemList.get(position);
 
         catName.setText(listVIewItem.getName());
-        catKind.setText("#"+listVIewItem.getKind());
         catAge.setText(listVIewItem.getAge());
         catSex.setText(listVIewItem.getSex());
+
+        String catkind_sub = listVIewItem.getKind().substring(6);
+        catKind.setText("#"+catkind_sub);
 
         catKind.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,22 +92,22 @@ public class ListVIewAdapter extends BaseAdapter {
         });
 
 
-        if(listVIewItem.getStatus()=="완료"){
-            EndingForm.setVisibility(View.VISIBLE);
+        if(listVIewItem.getStatus().contains("종료")){
+
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "주인을 찾은 고양이입니다", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "완료된 모집공고입니다", Toast.LENGTH_SHORT).show();
                 }
             });
 
         }else {
 
-            catImage.setOnClickListener(new View.OnClickListener() {
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Intent it = new Intent(context, DetailCatActivity.class);
-                    it.putExtra("Image", pos);
+                    it.putExtra("Image", listViewItemList.get(pos).geticon());
                     it.putExtra("Name", listViewItemList.get(pos).getName());
                     it.putExtra("Age", listViewItemList.get(pos).getAge());
                     it.putExtra("Sex", listViewItemList.get(pos).getSex());
@@ -149,32 +151,7 @@ public class ListVIewAdapter extends BaseAdapter {
             }
 
 
-            imageCall.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder alertdialog = new AlertDialog.Builder(context);
-                    alertdialog.setMessage(listViewItemList.get(pos).getHelper() + "으로 전화하시겠습니까?");
-                    alertdialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + listViewItemList.get(pos).getPhone()));
-                            context.startActivity(intent);
-                        }
-                    });
 
-                    alertdialog.setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            Toast.makeText(context, "취소 버튼을 눌렀습니다", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    AlertDialog alert = alertdialog.create();
-                    alert.setIcon(R.drawable.helper);
-                    alert.setTitle("전화연결");
-                    alert.show();
-                }
-            });
         }
 
 

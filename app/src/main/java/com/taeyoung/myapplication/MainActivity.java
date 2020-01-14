@@ -4,18 +4,27 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +36,15 @@ public class MainActivity extends AppCompatActivity {
     private ListVIewItem data;
     private ArrayList<ListVIewItem> arrays;
 
+    LinearLayout agoCalendar,timeCalendar;
+    TextView search, agoText, timeText;
+    int y=0, m=0, d=0;
+    boolean initem = false, inAge = false, inCareAddr = false, inCareNm = false, isPopFile = false;
+    boolean inKindCd = false, inNeuterYn = false, inNoticeNo = false, inCaretel = false, inProcessState=false;
+    boolean insexCd = false, inWeight = false ,inMark = false;
 
+    String age = null, careAddr = null, careNm = null, popfile = null, KindCd = null, neuterYn=null, noticeNo=null, careTel=null;
+    String processState = null, sexCd = null, weight = null, mark = null;
 
     @SuppressLint("WrongThread")
     @Override
@@ -37,22 +54,40 @@ public class MainActivity extends AppCompatActivity {
 
         StrictMode.enableDefaults();
 
+        SimpleDateFormat formatter = new SimpleDateFormat (
+                "yyyyMMdd", Locale.KOREA );
+        Date currentTime = new Date ( );
+        final String time = formatter.format ( currentTime );
+        final String ago = Integer.parseInt(time)-10+"";
 
-        String html ="http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde=20140301&endde=20140430&pageNo=1&numOfRows=10&ServiceKey=1O5TyVjRbo1%2FC5JVf9%2FNZIV2D6FSMXBUZe0MVRTwYQBFnk2GFESxQSZ1zLoJkddQWKRSjJ0y78xRxZt0Zo0S2g%3D%3D&_returnType=json";
 
-        boolean initem = false, inAge = false, inCareAddr = false, inCareNm = false, isPopFile = false;
-        boolean inKindCd = false, inNeuterYn = false, inNoticeNo = false, inCaretel = false, inProcessState=false;
-        boolean insexCd = false, inWeight = false ,inMark = false;
-
-        String age = null, careAddr = null, careNm = null, popfile = null, KindCd = null, neuterYn=null, noticeNo=null, careTel=null;
-        String processState = null, sexCd = null, weight = null, mark = null;
 
         listView = findViewById(R.id.listview);
         adapter = new ListVIewAdapter(arrays);
+        agoCalendar = findViewById(R.id.agoCalendar);
+        timeCalendar = findViewById(R.id.timeCalendar);
+        search = findViewById(R.id.search);
+        agoText = findViewById(R.id.agoText);
+        timeText = findViewById(R.id.timetext);
+
+
+        agoCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ageDate();
+            }
+        });
+
+        timeCalendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                timeDate();
+            }
+        });
+
 
 
         arrays = new ArrayList<ListVIewItem>();
-
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -61,10 +96,85 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        final int pageNumber= 1;
+        apiGoGo(ago,time,pageNumber);
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                arrays.clear();
+
+            //    String ago_str = agoText.getText().subSequence(0,4)+""+agoText.getText().subSequence(6,8)+agoText.getText().subSequence(10,12);
+             //   String time_str = timeText.getText().subSequence(0,4)+""+timeText.getText().subSequence(6,8)+timeText.getText().subSequence(10,12);
+                String ago_str="20151112";
+                String time_str="20151130";
+
+               Log.d("fsfsdfs",""+ago_str+"   "+time_str);
+                apiGoGo(ago_str,time_str,pageNumber);
+
+            }
+        });
+    }
+
+    void ageDate() {
+        Calendar c = Calendar.getInstance();
+        int nYear = c.get(Calendar.YEAR);
+        int nMon = c.get(Calendar.MONTH);
+        int nDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog.OnDateSetListener mDateSetListener =
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        String strDate = String.valueOf(year) + "년 ";
+                        strDate += String.valueOf(monthOfYear+1) + "월 ";
+                        strDate += String.valueOf(dayOfMonth) + "일";
+
+                        agoText.setText(strDate);
+                    }
+                };
+
+        DatePickerDialog oDialog = new DatePickerDialog(this,
+                android.R.style.Theme_DeviceDefault_Light_Dialog,
+                mDateSetListener, nYear, nMon, nDay);
+        oDialog.show();
+
+    }
+
+    void timeDate() {
+        Calendar c = Calendar.getInstance();
+        int nYear = c.get(Calendar.YEAR);
+        int nMon = c.get(Calendar.MONTH);
+        int nDay = c.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog.OnDateSetListener mDateSetListener =
+                new DatePickerDialog.OnDateSetListener() {
+                    public void onDateSet(DatePicker view, int year, int monthOfYear,
+                                          int dayOfMonth) {
+                        String strDate = String.valueOf(year) + "년 ";
+                        strDate += String.valueOf(monthOfYear+1) + "월 ";
+                        strDate += String.valueOf(dayOfMonth) + "일";
+
+                        timeText.setText(strDate);
+
+
+                    }
+                };
+
+        DatePickerDialog oDialog = new DatePickerDialog(this,
+                android.R.style.Theme_DeviceDefault_Light_Dialog,
+                mDateSetListener, nYear, nMon, nDay);
+        oDialog.show();
+
+    }
+
+    private void apiGoGo(String ago, String time, int pageNumber){
 
         try{
 
-            URL url = new URL(html); //검색 URL부분
+
+            URL url = new URL("http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde="+ago+"&endde="+time+"&pageNo="+pageNumber+"&numOfRows=500&ServiceKey=1O5TyVjRbo1%2FC5JVf9%2FNZIV2D6FSMXBUZe0MVRTwYQBFnk2GFESxQSZ1zLoJkddQWKRSjJ0y78xRxZt0Zo0S2g%3D%3D&_returnType=json");
+
 
             XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
             XmlPullParser parser = parserCreator.newPullParser();
@@ -141,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                             KindCd = parser.getText();
 
 
-                                inKindCd = false;
+                            inKindCd = false;
 
 
                         }
@@ -198,14 +308,10 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
-
         } catch(Exception e){
 
         }
     }
-
-
-
 
 
 

@@ -17,7 +17,7 @@
 
         <TextView
             android:id="@+id/EndingForm"
-            android:text="입양 완료"
+            android:text="모집 종료"
             android:textColor="#FFF"
             android:gravity="center"
             android:layout_margin="10dp"
@@ -62,6 +62,8 @@
                 android:id="@+id/catAGE"
                 android:text="나이"
                 android:layout_weight="1"
+                android:ellipsize="end"
+                android:maxLines="1"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:layout_width="match_parent"
@@ -75,7 +77,7 @@
             <TextView
                 android:id="@+id/catSEX"
                 android:text="성별"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:layout_gravity="center"
                 android:padding="10dp"
                 android:layout_width="match_parent"
@@ -99,15 +101,5 @@
             android:layout_height="wrap_content"/>
         </LinearLayout>
 
-
-
-    <ImageView
-        android:id="@+id/imageCall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_weight="3"
-        android:padding="10dp"
-        android:src="@drawable/callversion2" />
 
 </LinearLayout>
