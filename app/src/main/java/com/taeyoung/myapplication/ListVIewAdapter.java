@@ -80,7 +80,14 @@ public class ListVIewAdapter extends BaseAdapter {
         catAge.setText(listVIewItem.getAge());
         catSex.setText(listVIewItem.getSex());
 
-        String catkind_sub = listVIewItem.getKind().substring(6);
+        String catkind_sub;
+        if(listVIewItem.getKind().contains("고양이")){
+           catkind_sub = listVIewItem.getKind().substring(6);
+        }else {
+            catkind_sub = listVIewItem.getKind().substring(4);
+        }
+
+
         catKind.setText("#"+catkind_sub);
 
         catKind.setOnClickListener(new View.OnClickListener() {

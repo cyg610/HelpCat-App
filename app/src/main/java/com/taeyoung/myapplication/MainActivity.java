@@ -64,26 +64,8 @@ public class MainActivity extends AppCompatActivity {
 
         listView = findViewById(R.id.listview);
         adapter = new ListVIewAdapter(arrays);
-        agoCalendar = findViewById(R.id.agoCalendar);
-        timeCalendar = findViewById(R.id.timeCalendar);
-        search = findViewById(R.id.search);
-        agoText = findViewById(R.id.agoText);
-        timeText = findViewById(R.id.timetext);
 
 
-        agoCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ageDate();
-            }
-        });
-
-        timeCalendar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                timeDate();
-            }
-        });
 
 
 
@@ -98,75 +80,10 @@ public class MainActivity extends AppCompatActivity {
 
         final int pageNumber= 1;
         apiGoGo(ago,time,pageNumber);
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                arrays.clear();
-
-            //    String ago_str = agoText.getText().subSequence(0,4)+""+agoText.getText().subSequence(6,8)+agoText.getText().subSequence(10,12);
-             //   String time_str = timeText.getText().subSequence(0,4)+""+timeText.getText().subSequence(6,8)+timeText.getText().subSequence(10,12);
-                String ago_str="20151112";
-                String time_str="20151130";
-
-               Log.d("fsfsdfs",""+ago_str+"   "+time_str);
-                apiGoGo(ago_str,time_str,pageNumber);
-
-            }
-        });
-    }
-
-    void ageDate() {
-        Calendar c = Calendar.getInstance();
-        int nYear = c.get(Calendar.YEAR);
-        int nMon = c.get(Calendar.MONTH);
-        int nDay = c.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog.OnDateSetListener mDateSetListener =
-                new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        String strDate = String.valueOf(year) + "년 ";
-                        strDate += String.valueOf(monthOfYear+1) + "월 ";
-                        strDate += String.valueOf(dayOfMonth) + "일";
-
-                        agoText.setText(strDate);
-                    }
-                };
-
-        DatePickerDialog oDialog = new DatePickerDialog(this,
-                android.R.style.Theme_DeviceDefault_Light_Dialog,
-                mDateSetListener, nYear, nMon, nDay);
-        oDialog.show();
 
     }
 
-    void timeDate() {
-        Calendar c = Calendar.getInstance();
-        int nYear = c.get(Calendar.YEAR);
-        int nMon = c.get(Calendar.MONTH);
-        int nDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog.OnDateSetListener mDateSetListener =
-                new DatePickerDialog.OnDateSetListener() {
-                    public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                          int dayOfMonth) {
-                        String strDate = String.valueOf(year) + "년 ";
-                        strDate += String.valueOf(monthOfYear+1) + "월 ";
-                        strDate += String.valueOf(dayOfMonth) + "일";
-
-                        timeText.setText(strDate);
-
-
-                    }
-                };
-
-        DatePickerDialog oDialog = new DatePickerDialog(this,
-                android.R.style.Theme_DeviceDefault_Light_Dialog,
-                mDateSetListener, nYear, nMon, nDay);
-        oDialog.show();
-
-    }
 
     private void apiGoGo(String ago, String time, int pageNumber){
 
@@ -292,9 +209,9 @@ public class MainActivity extends AppCompatActivity {
                                     +"\n 충전소 ID : " +noticeNo + "\n 충전소 명칭 : " + careTel + "\n 위도 : " +processState
                                     +"\n 경도 : " +sexCd +"\n 충전기상태갱신시각 : " +weight+"\n"+"   "+inMark);
 
-                            if (KindCd.contains("고양이")) {
+
                                 initData(popfile, noticeNo, KindCd, age, sexCd, careNm, careTel, processState, weight, neuterYn, mark);
-                            }
+
 
                             initem = false;
                         }
