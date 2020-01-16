@@ -1,9 +1,174 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".KindActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/checkbox"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:text="입양 전 진지하게 점검해야 할 체크 리스트"
+            android:textStyle="bold"
+            android:textColor="#6B66FF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/question"
+            android:background="@drawable/round"
+            android:backgroundTint="#6B66FF"
+            android:padding="15dp"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:text="Q. 반려동물을 맞이 할 환경적 준비\n      마음의 각오는 되어 있나요?"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/answer"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/yesBtn"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="O"
+            android:gravity="center"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#6B66FF"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
+
+        <TextView
+            android:id="@+id/noBtn"
+            android:paddingTop="30dp"
+            android:paddingBottom="30dp"
+            android:text="X"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:textColor="#FF00"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"/>
+
+    </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/NoPage"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:textSize="15dp"
+            android:text="아이의 입양은 아이를 위해서, \n다시 한 번 생각해 보는 건 어떨까요?"
+            android:textStyle="bold"
+            android:textColor="#6B66FF"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+        <ImageView
+            android:src="@drawable/no"
+            android:layout_width="200dp"
+            android:layout_height="150dp"/>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/clear"
+        android:visibility="invisible"
+        android:padding="15dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:textStyle="bold"
+                android:textColor="#628B02"
+                android:paddingLeft="10dp"
+                android:text="당신의 입양을 진심으로 응원합니다!"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:src="@drawable/ours"
+                android:layout_width="150dp"
+                android:layout_height="130dp"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:text="입양 시 일부 경비가 청구될 수 있습니다."
+            android:textStyle="bold"
+            android:textColor="#6B66FF"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="* 시·군·구청에서 보호하고 있는 유기동물 중 보호시설을 공고한 지 10일이 지나도 주인이 나타나지 않는 경우 일반인에게 분양할 수 있습니다."
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="* 입양 보호시설에 미리 전화로 문의하시고, 담당자의 안내에 따라 방문 일시 등을 예약합니다."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="* 입양 시 신분증 복사본2장과 개집,개줄,목걸이 등 필요한 물품을 준비하고 보호시설을 방문해 입양계약서를 작성해야 합니다."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="* 입양 보호시설에는 신청자 본인이 직접 방문해야 합니다."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="*  미성년자에게는 반려동물을 분양하지 않습니다. 분양을 원하는 미성년자는 부모님의 허락을 얻어 반드시 부모님과 함께 방문해야 합니다."
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

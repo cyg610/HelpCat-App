@@ -1,21 +1,15 @@
 package com.taeyoung.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
-
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.DatePicker;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -23,23 +17,14 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+public class ChoiceActivity extends AppCompatActivity {
 
-public class MainActivity extends AppCompatActivity {
-
-
-
-    ListView listView;
-    ListVIewAdapter adapter;
-    private ListVIewItem data;
-    private ArrayList<ListVIewItem> arrays;
-
-    LinearLayout agoCalendar,timeCalendar;
-    TextView search, agoText, timeText;
-    int y=0, m=0, d=0;
+    RecyclerView catRe, dogRe;
+    NewAdapter adapter = new NewAdapter();
+    NewAdapter adapter1 = new NewAdapter();
     boolean initem = false, inAge = false, inCareAddr = false, inCareNm = false, isPopFile = false;
     boolean inKindCd = false, inNeuterYn = false, inNoticeNo = false, inCaretel = false, inProcessState=false;
     boolean insexCd = false, inWeight = false ,inMark = false;
@@ -47,14 +32,21 @@ public class MainActivity extends AppCompatActivity {
     String age = null, careAddr = null, careNm = null, popfile = null, KindCd = null, neuterYn=null, noticeNo=null, careTel=null;
     String processState = null, sexCd = null, weight = null, mark = null;
 
-    @SuppressLint("WrongThread")
+    LinearLayout catIntent, dogIntent, check;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_choice);
+
+        catRe = findViewById(R.id.catRe);
+        dogRe = findViewById(R.id.dogRe);
+        catIntent = findViewById(R.id.catIntent);
+        dogIntent = findViewById(R.id.dogIntent);
+        check = findViewById(R.id.check);
 
         StrictMode.enableDefaults();
-
         SimpleDateFormat formatter = new SimpleDateFormat (
                 "yyyyMMdd", Locale.KOREA );
         Date currentTime = new Date ( );
@@ -63,36 +55,77 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        listView = findViewById(R.id.listview);
-        adapter = new ListVIewAdapter(arrays);
+        LinearLayoutManager cLayoutManager = new LinearLayoutManager(this);
+        cLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
 
-        Intent intent = getIntent();
-        String who = intent.getStringExtra("Who");
-       // Log.d("who","who :"+ who);
+        catRe.setLayoutManager(cLayoutManager);
+        catRe.setAdapter(adapter1);
 
 
-        arrays = new ArrayList<ListVIewItem>();
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        LinearLayoutManager dLayoutManager = new LinearLayoutManager(this);
+        dLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
+        dogRe.setLayoutManager(dLayoutManager);
+        dogRe.setAdapter(adapter);
+
+        apiGoGo(ago,time);
+
+
+        adapter.NewItemClick(new NewAdapter.NewInterface() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+            public void onItemClick(View v, int pos, String _str) {
+                Intent intent = new Intent(ChoiceActivity.this, NewDetailActivity.class);
+                String str = _str;
+                intent.putExtra("Data",_str);
+                startActivity(intent);
             }
         });
 
-        final int pageNumber= 1;
-        apiGoGo(ago,time,who);
+        adapter1.NewItemClick(new NewAdapter.NewInterface() {
+            @Override
+            public void onItemClick(View v, int pos, String _str) {
+                Intent intent = new Intent(ChoiceActivity.this, NewDetailActivity.class);
+                String str = _str;
+                intent.putExtra("Data",_str);
+                startActivity(intent);
+            }
+        });
+
+        catIntent.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChoiceActivity.this, MainActivity.class);
+                intent.putExtra("Who","고양이");
+                startActivity(intent);
+            }
+        });
+
+        dogIntent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChoiceActivity.this, MainActivity.class);
+                intent.putExtra("Who","개");
+                startActivity(intent);
+            }
+        });
+
+        check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ChoiceActivity.this, KindActivity.class);
+                startActivity(intent);
+            }
+        });
 
     }
 
-
-
-    private void apiGoGo(String ago, String time, String pet){
+    private void apiGoGo(String ago, String time){
 
         try{
 
 
-            URL url = new URL("http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde="+ago+"&endde="+time+"&pageNo=1&numOfRows=300&ServiceKey=1O5TyVjRbo1%2FC5JVf9%2FNZIV2D6FSMXBUZe0MVRTwYQBFnk2GFESxQSZ1zLoJkddQWKRSjJ0y78xRxZt0Zo0S2g%3D%3D&_returnType=json");
+            URL url = new URL("http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde="+ago+"&endde="+time+"&pageNo="+1+"&numOfRows=100&ServiceKey=1O5TyVjRbo1%2FC5JVf9%2FNZIV2D6FSMXBUZe0MVRTwYQBFnk2GFESxQSZ1zLoJkddQWKRSjJ0y78xRxZt0Zo0S2g%3D%3D&_returnType=json");
 
 
             XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
@@ -206,16 +239,23 @@ public class MainActivity extends AppCompatActivity {
                     case XmlPullParser.END_TAG:
                         if(parser.getName().equals("item")){
 
-                            if(pet.trim().equals("고양이")){
-                                if(KindCd.contains("고양이")){
-                                    initData(popfile, noticeNo, KindCd, age, sexCd, careNm, careTel, processState, weight, neuterYn, mark);
-                                }
-                            }else if (pet.trim().equals("개")){
-                                if(KindCd.contains("개")){
-                                    initData(popfile, noticeNo, KindCd, age, sexCd, careNm, careTel, processState, weight, neuterYn, mark);
-                                }
-                            }
+                            Log.d("AGAGAG", "주소 : "+ age +"\n 충전기 타입: "+ careAddr +"\n 충전소ID : " + careNm
+                                    +"\n 충전기 명칭 : " + popfile +  "\n 충전기 상태 코드 : " + KindCd+ "\n 충전 방식 : " + neuterYn
+                                    +"\n 충전소 ID : " +noticeNo + "\n 충전소 명칭 : " + careTel + "\n 위도 : " +processState
+                                    +"\n 경도 : " +sexCd +"\n 충전기상태갱신시각 : " +weight+"\n"+"   "+inMark);
 
+
+                           // initData(popfile, noticeNo, KindCd, age, sexCd, careNm, careTel, processState, weight, neuterYn, mark);
+
+                            if(KindCd.contains("고양이")) {
+                                String com_test = popfile + "#@" + noticeNo + "#@" + KindCd + "#@" + age + "#@" + sexCd + "#@" + careNm + "#@" + careTel + "#@" + processState + "#@" + weight + "#@" + neuterYn + "#@" + mark;
+                                Log.d("what", com_test);
+                                adapter1.myNewItem(com_test);
+                            }else if (KindCd.contains("개")){
+                                String com_test = popfile + "#@" + noticeNo + "#@" + KindCd + "#@" + age + "#@" + sexCd + "#@" + careNm + "#@" + careTel + "#@" + processState + "#@" + weight + "#@" + neuterYn + "#@" + mark;
+                                Log.d("what", com_test);
+                                adapter.myNewItem(com_test);
+                            }
 
 
                             initem = false;
@@ -237,12 +277,4 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-    private void initData(String popfile, String noticeNo, String kindCd, String age, String sexCd, String careNm, String careTel, String state, String weight, String neut, String specialMark){
-        data = new ListVIewItem();
-
-        adapter.additem(popfile,noticeNo,kindCd, age, sexCd, careNm,careTel,state,weight,neut,specialMark);
-        arrays.add(data);
-    }
 }
