@@ -63,9 +63,9 @@ public class DetailCatActivity extends AppCompatActivity {
 
         String neut_str = it.getStringExtra("neut");
         if(neut_str.equals("Y")){
-             detailNeutered.setText("중성화 O");
+             detailNeutered.setText("중성화 완료");
         }else if(neut_str.equals("N")){
-            detailNeutered.setText("중성화 N");
+            detailNeutered.setText("중성화 안함");
         }else {
             detailNeutered.setText("중성화 정보없음");
         }
@@ -127,5 +127,14 @@ public class DetailCatActivity extends AppCompatActivity {
                 alert.show();
            }
        });
+
+        final Intent itPhoto = new Intent(DetailCatActivity.this, ImageActivity.class);
+        itPhoto.putExtra("detail", image);
+        detailIMG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(itPhoto);
+            }
+        });
     }
 }

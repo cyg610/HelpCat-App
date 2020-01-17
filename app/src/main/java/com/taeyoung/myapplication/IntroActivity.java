@@ -19,10 +19,6 @@ public class IntroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_intro);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        ImageView introIMG = findViewById(R.id.introIMG);
-        GlideDrawableImageViewTarget gifImage = new GlideDrawableImageViewTarget(introIMG);
-        Glide.with(this).load(R.drawable.giphy2).into(gifImage);
-
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -31,7 +27,7 @@ public class IntroActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             }
-        },5000);
+        },2500);
 
     }
 }

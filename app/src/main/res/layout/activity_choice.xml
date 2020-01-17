@@ -130,7 +130,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="유기동물을 입양한 당신이 자랑스럽습니다!"
+            android:text="유기동물을 입양하려는 당신이 자랑스럽습니다!"
             android:textSize="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

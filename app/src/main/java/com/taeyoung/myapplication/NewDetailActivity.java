@@ -64,16 +64,22 @@ public class NewDetailActivity extends AppCompatActivity {
 
         String neut_str = dataArr[9];
         if(neut_str.equals("Y")){
-            detailNeutered.setText("중성화 O");
+            detailNeutered.setText("중성화 완료");
         }else if(neut_str.equals("N")){
-            detailNeutered.setText("중성화 N");
+            detailNeutered.setText("중성화 안함");
         }else {
             detailNeutered.setText("중성화 정보없음");
         }
 
         String kind_str = dataArr[2];
-        String catkind_sub = kind_str.substring(6);
-        detailKind.setText(catkind_sub);
+
+        if (kind_str.contains("고양이")){
+            String catkind_sub = kind_str.substring(6);
+            detailKind.setText(catkind_sub);
+        }else  if (kind_str.contains("개")){
+            String catkind_sub = kind_str.substring(4);
+            detailKind.setText(catkind_sub);
+        }
 
         Thread mThread = new Thread() {
             public void run() {
@@ -128,5 +134,15 @@ public class NewDetailActivity extends AppCompatActivity {
                 alert.show();
             }
         });
+
+        final Intent itPhoto = new Intent(NewDetailActivity.this, ImageActivity.class);
+        itPhoto.putExtra("detail", image);
+        detailIMG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(itPhoto);
+            }
+        });
+
     }
 }

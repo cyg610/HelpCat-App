@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -31,7 +32,7 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
 
 
-
+    ProgressDialog progressDialog;
     ListView listView;
     ListVIewAdapter adapter;
     private ListVIewItem data;
@@ -61,6 +62,10 @@ public class MainActivity extends AppCompatActivity {
         final String time = formatter.format ( currentTime );
         final String ago = Integer.parseInt(time)-10+"";
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("ProgressDialog running...");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
 
 
         listView = findViewById(R.id.listview);
@@ -93,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             URL url = new URL("http://openapi.animal.go.kr/openapi/service/rest/abandonmentPublicSrvc/abandonmentPublic?bgnde="+ago+"&endde="+time+"&pageNo=1&numOfRows=300&ServiceKey=1O5TyVjRbo1%2FC5JVf9%2FNZIV2D6FSMXBUZe0MVRTwYQBFnk2GFESxQSZ1zLoJkddQWKRSjJ0y78xRxZt0Zo0S2g%3D%3D&_returnType=json");
-
+            progressDialog.dismiss();
 
             XmlPullParserFactory parserCreator = XmlPullParserFactory.newInstance();
             XmlPullParser parser = parserCreator.newPullParser();
@@ -106,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             while (parserEvent != XmlPullParser.END_DOCUMENT){
                 switch(parserEvent){
                     case XmlPullParser.START_TAG://parser가 시작 태그를 만나면 실행
+
                         if(parser.getName().equals("age")){ //title 만나면 내용을 받을수 있게 하자
                             inAge = true;
                         }

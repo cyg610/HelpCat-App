@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -22,6 +23,8 @@ import java.util.Locale;
 
 public class ChoiceActivity extends AppCompatActivity {
 
+
+    ProgressDialog progressDialog;
     RecyclerView catRe, dogRe;
     NewAdapter adapter = new NewAdapter();
     NewAdapter adapter1 = new NewAdapter();
@@ -45,6 +48,12 @@ public class ChoiceActivity extends AppCompatActivity {
         catIntent = findViewById(R.id.catIntent);
         dogIntent = findViewById(R.id.dogIntent);
         check = findViewById(R.id.check);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("잠시만 기다려 주세요");
+        progressDialog.setCancelable(true);
+        progressDialog.setProgressStyle(android.R.style.Widget_ProgressBar_Horizontal);
+        progressDialog.dismiss();
 
         StrictMode.enableDefaults();
         SimpleDateFormat formatter = new SimpleDateFormat (
@@ -95,6 +104,7 @@ public class ChoiceActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                progressDialog.show();
                 Intent intent = new Intent(ChoiceActivity.this, MainActivity.class);
                 intent.putExtra("Who","고양이");
                 startActivity(intent);
@@ -106,10 +116,11 @@ public class ChoiceActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(ChoiceActivity.this, MainActivity.class);
                 intent.putExtra("Who","개");
+                progressDialog.show();
                 startActivity(intent);
+
             }
         });
-
         check.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -52,36 +52,55 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/age"
-                android:layout_width="25dp"
-                android:layout_height="25dp"/>
-
-            <TextView
-                android:id="@+id/catAGE"
-                android:text="나이"
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_weight="1"
-                android:ellipsize="end"
-                android:maxLines="1"
                 android:layout_gravity="center"
-                android:padding="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <ImageView
-                android:layout_gravity="center"
-                android:src="@drawable/sex"
-                android:layout_width="30dp"
-                android:layout_height="30dp"/>
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/catSEX"
-                android:text="성별"
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/age"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"/>
+
+                <TextView
+                    android:id="@+id/catAGE"
+                    android:text="나이"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_weight="2"
-                android:layout_gravity="center"
-                android:padding="10dp"
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content">
+
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:src="@drawable/sex"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"/>
+
+                <TextView
+                    android:id="@+id/catSEX"
+                    android:text="성별"
+                    android:layout_weight="2"
+                    android:layout_gravity="center"
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -90,7 +109,7 @@
 
         <TextView
             android:background="@drawable/round"
-            android:backgroundTint="#D3C64A"
+            android:backgroundTint="#B57AB4"
             android:textColor="#FFF"
             android:layout_marginTop="10dp"
             android:padding="5dp"

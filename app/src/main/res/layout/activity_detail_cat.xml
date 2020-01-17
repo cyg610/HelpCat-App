@@ -145,7 +145,7 @@
             android:paddingLeft="10dp"
             android:paddingTop="10dp"
             android:textStyle="bold"
-            android:textColor="#D3C64A"
+            android:textColor="#B57AB4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -221,6 +221,6 @@
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/round"
-        android:backgroundTint="#E5D85C"
+        android:backgroundTint="#FBB9B9"
         android:text="입양 문의하기" />
 </RelativeLayout>

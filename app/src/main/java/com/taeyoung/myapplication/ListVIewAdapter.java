@@ -90,13 +90,6 @@ public class ListVIewAdapter extends BaseAdapter {
 
         catKind.setText("#"+catkind_sub);
 
-        catKind.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, KindActivity.class);
-                context.startActivity(intent);
-            }
-        });
 
 
         if(listVIewItem.getStatus().contains("종료")){
