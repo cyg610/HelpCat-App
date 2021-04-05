@@ -12,7 +12,7 @@ Relative Layout으로 고양이 GIF를 가운데에 배치하고 GIF를 기준�
 
 3.화면 구성 - 메인(리스트뷰)
 
-![캡처3](https://user-images.githubusercontent.com/39265738/113573179-91a71e80-9654-11eb-9cbc-81da1a7e2cbc.JPG)
+![그림3](https://user-images.githubusercontent.com/39265738/113573190-966bd280-9654-11eb-82bc-69351c787138.png)
 
 메인화면은 리스트뷰로 이미지뷰 3개와 Textview 4개 버튼 하나로 구성했습니다.
 또한 이미지 위에 텍스트뷰가 뜨도록 구성하고 분양을 모집하고 있다면 텍스트뷰를 숨기고 분양이 완료됐다면 텍스트 뷰가 보이도록 구현헀습니다.
@@ -53,9 +53,10 @@ intent를 통해 문자열로 데이터를 전달받아 데이터를 출력하�
 메인페이지에서는 이미지뷰를 누르면 상세페이지로 전화버튼을 누르면 전화 다이어그램으로 이동해 해당 번호로 연결되도록 했습니다.
 상세페이지의 전화 연결 버튼 또한 해당 연락처로 전화 연결을 하도록 했습니다.
 
+9. 이미지 시연 영상
 
+https://user-images.githubusercontent.com/39265738/113574631-738eed80-9657-11eb-8809-5d050ea619a5.mp4
 
-https://user-images.githubusercontent.com/39265738/113573161-894ee380-9654-11eb-92b6-f6f60bb77e0d.mp4
 
 
 
